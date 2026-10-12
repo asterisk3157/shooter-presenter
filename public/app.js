@@ -224,10 +224,7 @@ addEventListener('beforeunload', () => { if (!gun.legacy) { gun.send('SEG'); gun
 
 // シューターにつなげないブラウザ（Safari・Firefox・スマホ）では、接続まわりの表示を出さない
 if (hasSerial) status('シューター: 未接続');
-else {
-  for (const id of ['connect', 'gainBox', 'gunHelp']) $(id).hidden = true;
-  $('gunNote').textContent = 'パソコン版のChromeかEdgeで開くと、C4\'sのシューターをレーザーポインターとして使えます';
-}
+else for (const id of ['connect', 'gainBox', 'gunHelp']) $(id).hidden = true;
 
 // ---- マウスをポインターにする --------------------------------------------------
 let mouseMode = false;
