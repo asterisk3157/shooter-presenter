@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- 読みこむのは、このサイトに置いたファイルだけ。PDF の中の命令を実行させない（_headers にも同じ内容がある） -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self' blob:; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Shooter Presenter</title>
+<meta name="description" content="PDFのスライドを、ブラウザだけで発表できるビューア。開いたファイルは外部に送信しません。">
+<meta property="og:title" content="Shooter Presenter">
+<meta property="og:description" content="PDFのスライドを、ブラウザだけで発表できるビューア。開いたファイルは外部に送信しません。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="start">
+
+<div id="stage">
+  <canvas id="page" hidden></canvas>
+
+  <div id="empty">
+    <h1>Shooter Presenter</h1>
+    <p class="lead">PDFのスライドを、ブラウザだけで発表</p>
+    <label class="btn main big">PDFを選ぶ<input class="file" type="file" accept="application/pdf,.pdf"></label>
+    <p class="drop">または、この画面にPDFをドラッグ</p>
+    <ul class="notes">
+      <li>開いたファイルは、このブラウザの中だけで表示します。外部には送信しません</li>
+      <li>PowerPoint・Keynote・Googleスライドの資料は、PDFに書き出してから開きます <button class="link" id="howto">書き出し方</button></li>
+      <li id="gunNote">C4'sのシューターを接続すると、レーザーポインターとして使えます</li>
+    </ul>
+  </div>
+</div>
+<div id="dot"></div>
+
+<div id="bar">
+  <label class="btn main">PDFを開く<input class="file" type="file" accept="application/pdf,.pdf"></label>
+  <button id="connect">シューターを接続</button>
+  <button id="mouse">マウスをポインターにする</button>
+  <button id="full">全画面</button>
+  <span id="gainBox">動く幅 <input id="gain" type="range" min="10" max="60" value="25"> <span id="gainv">±25°</span></span>
+  <span id="status"></span>
+</div>
+
+<div id="help">→ / Space: 次へ　←: 前へ　F: 全画面　P: 点を出す・消す<span id="gunHelp">　引き金を短く: 次へ　長押し: 前へ　C: 照準を中央に　X / Y: 向きを反転</span></div>
+<div id="pageno"></div>
+<div id="toast"></div>
+
+<!-- PDF以外のファイルを置いたとき、または「書き出し方」を押したときに出る案内 -->
+<div id="guide" hidden>
+  <div class="panel">
+    <h2>PDFに書き出してから開きます</h2>
+    <p id="guideLead">このビューアが開けるのはPDFです。元の資料を作ったアプリで、PDFに書き出してください。</p>
+    <table>
+      <tr><th>PowerPoint</th><td>ファイル → エクスポート → PDF</td></tr>
+      <tr><th>Keynote</th><td>ファイル → 書き出す → PDF</td></tr>
+      <tr><th>Googleスライド</th><td>ファイル → ダウンロード → PDFドキュメント</td></tr>
+    </table>
+    <p class="small">アニメーションと動画は、PDFでは動きません。</p>
+    <button class="main" id="guideClose">閉じる</button>
+  </div>
+</div>
+
+<script src="vendor/pdf.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

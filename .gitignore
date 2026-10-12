@@ -1,0 +1,15 @@
+.DS_Store
+*.log
+node_modules/
+.env
+.env.local
+.vscode/
+.idea/
+*.swp
+.claude/
+.wrangler/
+
+# 発表の資料はリポジトリに入れない（開くのは使う人のブラウザの中だけ）
+*.pdf
+*.pptx
+*.key
