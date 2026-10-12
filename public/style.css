@@ -1,0 +1,70 @@
+:root { --c4: #EF8733; --ink: #1A1A1A; --bar: rgba(20, 20, 20, .88); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #111; color: #fff;
+  font-family: 'Hiragino Sans', 'Noto Sans JP', Meiryo, sans-serif; }
+[hidden] { display: none !important; }
+#stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+#page { background: #fff; box-shadow: 0 10px 50px rgba(0, 0, 0, .5); }
+
+/* 最初の画面 */
+#empty { width: min(720px, 100% - 48px); text-align: center; padding: 40px 0; }
+#empty.over { outline: 4px dashed var(--c4); outline-offset: 24px; }
+#empty h1 { font-size: 44px; letter-spacing: .02em; }
+#empty .lead { margin-top: 10px; font-size: 20px; color: #ccc; }
+#empty .big { display: inline-block; margin-top: 40px; padding: 18px 56px; font-size: 22px; }
+#empty .drop { margin-top: 14px; font-size: 15px; color: #999; }
+#empty .notes { margin-top: 44px; padding-top: 24px; border-top: 1px solid #333; list-style: none; text-align: left;
+  font-size: 15px; line-height: 1.7; color: #bbb; }
+#empty .notes li { padding-left: 18px; position: relative; margin-top: 8px; }
+#empty .notes li::before { content: ''; position: absolute; left: 0; top: .7em; width: 8px; height: 2px; background: var(--c4); }
+button.link { background: none; border: 0; padding: 0; color: var(--c4); text-decoration: underline; font-size: inherit; }
+button.link:hover { background: none; color: #ffb27a; }
+
+/* レーザーポインター */
+#dot { position: absolute; left: 0; top: 0; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%;
+  background: var(--c4); box-shadow: 0 0 0 5px rgba(239, 135, 51, .28), 0 0 22px 6px rgba(239, 135, 51, .55);
+  pointer-events: none; display: none; will-change: transform; }
+#dot.on { display: block; }
+#dot.held { background: #fff; box-shadow: 0 0 0 8px rgba(239, 135, 51, .6), 0 0 30px 10px rgba(239, 135, 51, .8); }
+
+/* 上のバー（マウスを動かすと出る。発表中は隠れる） */
+#bar { position: absolute; left: 0; right: 0; top: 0; padding: 12px 16px; background: var(--bar);
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 15px; transition: opacity .3s; z-index: 5; }
+#bar.hide { opacity: 0; pointer-events: none; }
+body.start #bar { display: none; }
+button, label.btn { font: inherit; color: #fff; background: #333; border: 1px solid #555; padding: 8px 14px; cursor: pointer; }
+button:hover, label.btn:hover { background: #444; }
+button.main, label.btn.main { background: var(--c4); border-color: var(--c4); color: #1A1A1A; font-weight: 700; }
+button.main:hover, label.btn.main:hover { background: #ff9a4d; }
+#status { margin-left: auto; color: #ddd; }
+#status b { color: var(--c4); }
+#gain { width: 120px; vertical-align: middle; }
+input[type=file] { display: none; }
+
+/* 下の表示（ページ番号と、一時的なお知らせ） */
+#pageno { position: absolute; right: 18px; bottom: 12px; font-size: 16px; color: rgba(255, 255, 255, .55); }
+#toast { position: absolute; left: 50%; bottom: 46px; transform: translateX(-50%); background: var(--bar); padding: 10px 20px;
+  font-size: 18px; opacity: 0; transition: opacity .25s; pointer-events: none; max-width: calc(100% - 32px); text-align: center; z-index: 6; }
+#toast.on { opacity: 1; }
+#help { position: absolute; left: 18px; right: 90px; bottom: 12px; font-size: 14px; color: rgba(255, 255, 255, .5); line-height: 1.7; }
+body.present #help, body.start #help, body.touch #help { display: none; }
+
+/* PDFへの書き出し方の案内 */
+#guide { position: absolute; inset: 0; background: rgba(0, 0, 0, .7); display: flex; align-items: center; justify-content: center; z-index: 10; }
+#guide .panel { width: min(600px, 100% - 32px); background: #1c1c1c; border: 1px solid #444; padding: 32px; }
+#guide h2 { font-size: 24px; }
+#guide p { margin-top: 12px; font-size: 16px; line-height: 1.7; color: #ccc; }
+#guide table { margin-top: 20px; width: 100%; border-collapse: collapse; font-size: 16px; }
+#guide th, #guide td { text-align: left; padding: 12px 0; border-top: 1px solid #333; }
+#guide th { width: 9.5em; color: var(--c4); font-weight: 700; }
+#guide .small { font-size: 14px; color: #999; }
+#guide button { margin-top: 24px; padding: 10px 32px; }
+
+@media (max-width: 720px) {
+  #empty h1 { font-size: 32px; }
+  #empty .lead { font-size: 17px; }
+  #empty .big { padding: 16px 40px; font-size: 20px; }
+  #empty .drop { display: none; }
+  #guide .panel { padding: 24px 20px; }
+  #gainBox { display: none; }
+}
